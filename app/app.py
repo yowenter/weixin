@@ -1,9 +1,10 @@
 #-*-encoding:utf-8-*-
 
 from flask import request
-from flask import Flask
-from service import authorize
+from flask import Flask,abort
 from werkzeug import datastructures
+from service import authorize
+from weixin import verify_weixin_server
 
 app=Flask('weixin')
 app.config.update(dict(DEBUG=True))
@@ -26,6 +27,12 @@ def ping():
 def admin():
     return 'login ok.'
 
+@app.route('/weixin/verify-server', methods=['GET'])
+def access_verify():
+    if not verify_weixin_server(request.values.get('signature',''), request.values.get('timestamp',''), request.values.get('nonce','')):
+        abort(401)
+    return 'verify ok'
+        
 
 
 if __name__=='__main__':
