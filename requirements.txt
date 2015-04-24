@@ -1,0 +1,7 @@
+Flask
+requests
+SQLAlchemy
+MySQL-python
+Flask-SQLAlchemy
+xmltodict
+
