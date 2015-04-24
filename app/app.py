@@ -20,7 +20,9 @@ def merge_json():
 @app.route('/ping',methods=['GET'])
 def ping():
     return "ping ok"
-
+@app.route('/',methods=['GET'])
+def index():
+    return 'Hey,Taoge!'
 
 @app.route('/admin',methods=['POST','GET'])
 @authorize
