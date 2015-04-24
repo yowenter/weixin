@@ -20,10 +20,10 @@ def verify_weixin(f):
     return wrapper
 
 def resp_subsribe(req_data):
-    return text_reply(req_data.get('FromUserName'), req_data.get('ToUserName'),"欢迎关注涛哥的公众号！")
+    return text_reply(req_data.get('FromUserName'), req_data.get('ToUserName'),"Hello,I am wenter.")
 
 def resp_developing(req_data):
-    return text_reply(req_data.get('FromUserName'), req_data.get('ToUserName'),"涛哥正在开发中。。")
+    return text_reply(req_data.get('FromUserName'), req_data.get('ToUserName'),"Well,I am developping...")
 
 def make_resp(req_xml):
     req_data=req_xml.get('xml')
