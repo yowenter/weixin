@@ -5,4 +5,4 @@ COPY ./requirements.txt /usr/src/app/
 RUN pip install -r  requirements.txt
 COPY . /usr/src/app
 EXPOSE 4000
-CMD ['python','app.app.py']
+CMD ['python','app.app:app']
