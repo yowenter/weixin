@@ -29,7 +29,7 @@ def index():
 def admin():
     return 'login ok.'
 
-@app.route('/weixin/verify-server', methods=['GET'])
+@app.route('/weixin', methods=['GET'])
 def access_verify():
     if not verify_weixin_server(request.values.get('signature',''), request.values.get('timestamp',''), request.values.get('nonce','')):
         abort(401)
