@@ -33,7 +33,7 @@ def admin():
 def access_verify():
     if not verify_weixin_server(request.values.get('signature',''), request.values.get('timestamp',''), request.values.get('nonce','')):
         abort(401)
-    return 'verify ok'
+    return request.values.get('echostr')
         
 
 
