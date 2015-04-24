@@ -3,7 +3,7 @@ import hashlib
 from flask import request,abort
 from functools import wraps
 from config import WEIXIN_TOKEN
-
+from  message import text_reply
 
 def verify_weixin(f):
     @wraps(f)
@@ -19,4 +19,20 @@ def verify_weixin(f):
             abort(401)
     return wrapper
 
+def resp_subsribe(req_data):
+    return text_reply(req_data.get('FromUserName'), req_data.get('ToUserName'),"欢迎关注涛哥的公众号！")
+
+def resp_developing(req_data):
+    return text_reply(req_data.get('FromUserName'), req_data.get('ToUserName'),"涛哥正在开发中。。")
+
+def make_resp(req_xml):
+    req_data=req_xml.get('xml')
+    event=req_data.get('Event')
+    if event and 'subscribe' in event:
+        return resp_subsribe(req_data)
+    else:
+        return resp_developing(req_data)
     
+        
+
+
