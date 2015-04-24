@@ -1,13 +1,16 @@
 #-*-encoding:utf-8-*-
-
+import logging
+import xmltodict
 from flask import request
-from flask import Flask,abort
+from flask import Flask
 from werkzeug import datastructures
 from service import authorize
-from weixin import verify_weixin_server
+from weixin import verify_weixin
 
 app=Flask('weixin')
 app.config.update(dict(DEBUG=True))
+LOG=logging.getLogger(__name__)
+
 
 @app.before_request
 def merge_json():
@@ -16,6 +19,7 @@ def merge_json():
         request.values = datastructures.CombinedMultiDict([request.args,request.form,json])
     else:
         request.values = datastructures.CombinedMultiDict([request.args,request.form])
+
 
 @app.route('/ping',methods=['GET'])
 def ping():
@@ -30,10 +34,16 @@ def admin():
     return 'login ok.'
 
 @app.route('/weixin', methods=['GET'])
+@verify_weixin
 def access_verify():
-    if not verify_weixin_server(request.values.get('signature',''), request.values.get('timestamp',''), request.values.get('nonce','')):
-        abort(401)
     return request.values.get('echostr')
+
+@app.route('/weixin',methods=['POST'])
+@verify_weixin
+def weixin_callback():
+    req_xml= xmltodict.parse(request.data)
+    LOG.info(str(req_xml))
+    
         
 
 
